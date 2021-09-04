@@ -42,7 +42,6 @@ using Stride.Editor.Engine;
 using Stride.Editor.Preview;
 using Stride.GameStudio.View;
 using Stride.Graphics;
-using Stride.Metrics;
 using Stride.PrivacyPolicy;
 using EditorSettings = Stride.Core.Assets.Editor.Settings.EditorSettings;
 using MessageBox = System.Windows.MessageBox;
@@ -82,90 +81,78 @@ namespace Stride.GameStudio
             EditorSettings.Initialize();
             Thread.CurrentThread.Name = "Main thread";
 
-            // Install Metrics for the editor
-            using (StrideGameStudio.MetricsClient = new MetricsClient(CommonApps.StrideEditorAppId))
+            try
             {
-                try
+                // Environment.GetCommandLineArgs correctly process arguments regarding the presence of '\' and '"'
+                var args = Environment.GetCommandLineArgs().Skip(1).ToList();
+                var startupSessionPath = StrideEditorSettings.StartupSession.GetValue();
+                var lastSessionPath = EditorSettings.ReloadLastSession.GetValue() ? mru.MostRecentlyUsedFiles.FirstOrDefault() : null;
+                var initialSessionPath = !UPath.IsNullOrEmpty(startupSessionPath) ? startupSessionPath : lastSessionPath?.FilePath;
+
+                // Handle arguments
+                for (var i = 0; i < args.Count; i++)
                 {
-                    // Environment.GetCommandLineArgs correctly process arguments regarding the presence of '\' and '"'
-                    var args = Environment.GetCommandLineArgs().Skip(1).ToList();
-                    var startupSessionPath = StrideEditorSettings.StartupSession.GetValue();
-                    var lastSessionPath = EditorSettings.ReloadLastSession.GetValue() ? mru.MostRecentlyUsedFiles.FirstOrDefault() : null;
-                    var initialSessionPath = !UPath.IsNullOrEmpty(startupSessionPath) ? startupSessionPath : lastSessionPath?.FilePath;
-
-                    // Handle arguments
-                    for (var i = 0; i < args.Count; i++)
+                    if (args[i] == "/LauncherWindowHandle")
                     {
-                        if (args[i] == "/LauncherWindowHandle")
-                        {
-                            windowHandle = new IntPtr(long.Parse(args[++i]));
-                        }
-                        else if (args[i] == "/NewProject")
-                        {
-                            initialSessionPath = null;
-                        }
-                        else if (args[i] == "/DebugEditorGraphics")
-                        {
-                            EmbeddedGame.DebugMode = true;
-                        }
-                        else if (args[i] == "/RenderDoc")
-                        {
-                            // TODO: RenderDoc is not working here (when not in debug)
-                            GameStudioPreviewService.DisablePreview = true;
-                            renderDocManager = new RenderDocManager();
-                            renderDocManager.Initialize();
-                        }
-                        else if (args[i] == "/Reattach")
-                        {
-                            var debuggerProcessId = int.Parse(args[++i]);
+                        windowHandle = new IntPtr(long.Parse(args[++i]));
+                    }
+                    else if (args[i] == "/NewProject")
+                    {
+                        initialSessionPath = null;
+                    }
+                    else if (args[i] == "/DebugEditorGraphics")
+                    {
+                        EmbeddedGame.DebugMode = true;
+                    }
+                    else if (args[i] == "/RenderDoc")
+                    {
+                        // TODO: RenderDoc is not working here (when not in debug)
+                        GameStudioPreviewService.DisablePreview = true;
+                        renderDocManager = new RenderDocManager();
+                        renderDocManager.Initialize();
+                    }
+                    else if (args[i] == "/Reattach")
+                    {
+                        var debuggerProcessId = int.Parse(args[++i]);
 
-                            if (!System.Diagnostics.Debugger.IsAttached)
+                        if (!System.Diagnostics.Debugger.IsAttached)
+                        {
+                            using (var debugger = VisualStudioDebugger.GetByProcess(debuggerProcessId))
                             {
-                                using (var debugger = VisualStudioDebugger.GetByProcess(debuggerProcessId))
-                                {
-                                    debugger?.Attach();
-                                }
+                                debugger?.Attach();
                             }
                         }
-                        else if (args[i] == "/RecordEffects")
-                        {
-                            GameStudioBuilderService.GlobalEffectLogPath = args[++i];
-                        }
-                        else
-                        {
-                            initialSessionPath = args[i];
-                        }
                     }
-                    RuntimeHelpers.RunModuleConstructor(typeof(Asset).Module.ModuleHandle);
-
-                    //listen to logger for crash report
-                    GlobalLogger.GlobalMessageLogged += GlobalLoggerOnGlobalMessageLogged;
-
-                    mainDispatcher = Dispatcher.CurrentDispatcher;
-                    mainDispatcher.InvokeAsync(() => Startup(initialSessionPath));
-
-                    using (new WindowManager(mainDispatcher))
+                    else if (args[i] == "/RecordEffects")
                     {
-                        app = new App { ShutdownMode = ShutdownMode.OnExplicitShutdown };
-                        app.Activated += (sender, eventArgs) =>
-                        {
-                            StrideGameStudio.MetricsClient?.SetActiveState(true);
-                        };
-                        app.Deactivated += (sender, eventArgs) =>
-                        {
-                            StrideGameStudio.MetricsClient?.SetActiveState(false);
-                        };
-
-                        app.InitializeComponent();
-                        app.Run();
+                        GameStudioBuilderService.GlobalEffectLogPath = args[++i];
                     }
+                    else
+                    {
+                        initialSessionPath = args[i];
+                    }
+                }
+                RuntimeHelpers.RunModuleConstructor(typeof(Asset).Module.ModuleHandle);
 
-                    renderDocManager?.RemoveHooks();
-                }
-                catch (Exception e)
+                //listen to logger for crash report
+                GlobalLogger.GlobalMessageLogged += GlobalLoggerOnGlobalMessageLogged;
+
+                mainDispatcher = Dispatcher.CurrentDispatcher;
+                mainDispatcher.InvokeAsync(() => Startup(initialSessionPath));
+
+                using (new WindowManager(mainDispatcher))
                 {
-                    HandleException(e, 0);
+                    app = new App { ShutdownMode = ShutdownMode.OnExplicitShutdown };
+
+                    app.InitializeComponent();
+                    app.Run();
                 }
+
+                renderDocManager?.RemoveHooks();
+            }
+            catch (Exception e)
+            {
+                HandleException(e, 0);
             }
         }
 
