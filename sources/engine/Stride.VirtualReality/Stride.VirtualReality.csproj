@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
   <PropertyGroup>
     <StrideRuntime>true</StrideRuntime>
     <StrideGraphicsApiDependent>true</StrideGraphicsApiDependent>
@@ -13,6 +13,7 @@
     <StrideAssemblyProcessorOptions>--serialization --parameter-key</StrideAssemblyProcessorOptions>
     <StrideBuildTags>*</StrideBuildTags>
     <StrideCodeAnalysis>true</StrideCodeAnalysis>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <Choose>
     <When Condition=" '$(TargetFramework)' == '$(StrideFrameworkAndroid)'">

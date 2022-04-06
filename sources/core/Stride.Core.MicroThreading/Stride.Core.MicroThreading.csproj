@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
   <PropertyGroup>
     <StrideRuntime>true</StrideRuntime>
   </PropertyGroup>
@@ -11,6 +11,7 @@
     <StrideAssemblyProcessor>true</StrideAssemblyProcessor>
     <StrideAssemblyProcessorOptions>--auto-module-initializer</StrideAssemblyProcessorOptions>
     <StrideCodeAnalysis>true</StrideCodeAnalysis>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\shared\SharedAssemblyInfo.cs">

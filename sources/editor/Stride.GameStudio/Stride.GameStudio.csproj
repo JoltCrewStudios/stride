@@ -108,7 +108,7 @@
 
   <PropertyGroup>
     <TargetsForTfmSpecificBuildOutput>_StrideIncludeExtraAssemblies;$(TargetsForTfmSpecificBuildOutput)</TargetsForTfmSpecificBuildOutput>
-
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <Target Name="_StrideIncludeExtraAssemblies">
     <ItemGroup>

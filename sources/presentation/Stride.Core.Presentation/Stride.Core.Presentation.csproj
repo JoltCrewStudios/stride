@@ -12,6 +12,7 @@
     <RestorePackages>true</RestorePackages>
     <UseWPF>true</UseWPF>
     <EnableDefaultPageItems>false</EnableDefaultPageItems>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

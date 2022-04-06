@@ -10,6 +10,7 @@
     <StrideAssemblyProcessor>true</StrideAssemblyProcessor>
     <StrideAssemblyProcessorOptions>--serialization</StrideAssemblyProcessorOptions>
     <StrideBuildTags>*</StrideBuildTags>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\shared\SharedAssemblyInfo.cs">

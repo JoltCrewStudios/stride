@@ -8,6 +8,7 @@
     <StrideAssemblyProcessorOptions>$(StrideAssemblyProcessorDefaultOptions)</StrideAssemblyProcessorOptions>
     <StrideBuildTags>*</StrideBuildTags>
     <StridePackAssets>true</StridePackAssets>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\shared\SharedAssemblyInfo.cs">

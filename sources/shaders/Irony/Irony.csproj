@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
   <PropertyGroup>
     <StrideRuntime>true</StrideRuntime>
   </PropertyGroup>
@@ -13,6 +13,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <StrideBuildTags>*</StrideBuildTags>
     <AssemblyName>Stride.Irony</AssemblyName>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   
   <ItemGroup>

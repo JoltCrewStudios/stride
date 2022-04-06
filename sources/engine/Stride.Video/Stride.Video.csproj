@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
   <PropertyGroup>
     <StrideRuntime>true</StrideRuntime>
     <StrideGraphicsApiDependent>true</StrideGraphicsApiDependent>
@@ -10,6 +10,7 @@
     <StrideBuildTags>*</StrideBuildTags>
     <StrideCodeAnalysis>true</StrideCodeAnalysis>
     <StridePackAssets>true</StridePackAssets>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == '$(StrideFrameworkAndroid)'">
     <DefineConstants>STRIDE_VIDEO_MEDIACODEC;$(DefineConstants)</DefineConstants>

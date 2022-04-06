@@ -8,6 +8,7 @@
     <StrideLocalized>true</StrideLocalized>
     <UseWPF>true</UseWPF>
     <EnableDefaultPageItems>false</EnableDefaultPageItems>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dirkster.AvalonDock" Version="4.60.1" />

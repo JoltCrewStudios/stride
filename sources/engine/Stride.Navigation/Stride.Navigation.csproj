@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
 
   <PropertyGroup>
     <StrideRuntime>true</StrideRuntime>
@@ -13,6 +13,7 @@
     <StrideAssemblyProcessorOptions>--serialization</StrideAssemblyProcessorOptions>
     <StrideBuildTags>*</StrideBuildTags>
     <StrideCodeAnalysis>true</StrideCodeAnalysis>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

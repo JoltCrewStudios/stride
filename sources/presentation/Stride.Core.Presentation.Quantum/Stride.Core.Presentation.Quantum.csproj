@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
 
   <Import Project="..\..\targets\Stride.Core.props" />
  
@@ -8,6 +8,7 @@
     <TargetFramework>$(StrideEditorTargetFramework)</TargetFramework>
     <UseWPF>true</UseWPF>
     <EnableDefaultPageItems>false</EnableDefaultPageItems>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

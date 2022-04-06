@@ -15,6 +15,7 @@
     <StrideAssemblyProcessorOptions>--auto-module-initializer</StrideAssemblyProcessorOptions>
     <StridePlatformDependent>true</StridePlatformDependent>
     <StrideBuildTags>*</StrideBuildTags>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

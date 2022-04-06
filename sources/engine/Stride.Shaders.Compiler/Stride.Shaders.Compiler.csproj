@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
   <PropertyGroup>
     <StrideRuntime>true</StrideRuntime>
   </PropertyGroup>
@@ -7,6 +7,7 @@
     <StrideBuildTags>*</StrideBuildTags>
     <StrideAssemblyProcessor>true</StrideAssemblyProcessor>
     <StrideAssemblyProcessorOptions>--auto-module-initializer</StrideAssemblyProcessorOptions>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DisableRegistryUse)' != 'true'">
     <WindowsSdkDir_10 Condition="'$(WindowsSdkDir_10)' == ''">$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SDKs\Windows\v10.0@InstallationFolder)</WindowsSdkDir_10>

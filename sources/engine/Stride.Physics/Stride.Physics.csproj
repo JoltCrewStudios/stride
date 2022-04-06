@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup>
     <StrideRuntime>true</StrideRuntime>
@@ -14,6 +14,7 @@
     <StrideBulletPlatform></StrideBulletPlatform> <!--Empty by default, only iOS needs special care-->
     <StrideBulletPlatform Condition="'$(TargetFramework)' == '$(StrideFrameworkiOS)'">iOS</StrideBulletPlatform>
     <StrideCodeAnalysis>true</StrideCodeAnalysis>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <StrideNativeLib Include="..\..\..\deps\BulletPhysics\$(StridePlatformDeps)\**\libbulletc.*">

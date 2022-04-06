@@ -16,6 +16,7 @@
     <StridePlatformDependent>true</StridePlatformDependent>
     <StrideBuildTags>*</StrideBuildTags>
     <StrideCodeAnalysis>true</StrideCodeAnalysis>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Resources\Resource.Designer.cs" />

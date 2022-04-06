@@ -18,6 +18,7 @@
     <StridePlatformDependent>true</StridePlatformDependent>
     <StrideBuildTags>*</StrideBuildTags>
     <StrideCodeAnalysis>true</StrideCodeAnalysis>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

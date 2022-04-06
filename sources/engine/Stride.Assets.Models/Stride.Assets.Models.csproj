@@ -6,6 +6,7 @@
     <TargetFramework>$(StrideEditorTargetFramework)</TargetFramework>
     <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\shared\SharedAssemblyInfo.cs">

@@ -8,7 +8,9 @@
     <SchemaVersion>2.0</SchemaVersion>
     <StrideAssemblyProcessor>false</StrideAssemblyProcessor>
     <RestorePackages>true</RestorePackages>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
+  
   <ItemGroup>
     <Compile Include="..\..\shared\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>

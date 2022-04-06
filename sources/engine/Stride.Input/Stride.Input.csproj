@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
   <PropertyGroup>
     <StrideRuntime>true</StrideRuntime>
     <StrideRuntimeWindowsNet6>true</StrideRuntimeWindowsNet6>
@@ -13,6 +13,7 @@
     <StrideBuildTags>*</StrideBuildTags>
     <StrideCodeAnalysis>true</StrideCodeAnalysis>
     <DefineConstants Condition="$(TargetFramework.StartsWith('net4'))">$(DefineConstants);STRIDE_INPUT_RAWINPUT</DefineConstants>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\shared\SharedAssemblyInfo.cs">

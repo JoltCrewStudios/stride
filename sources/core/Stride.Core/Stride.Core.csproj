@@ -17,6 +17,7 @@
     <StrideBuildTags>*</StrideBuildTags>
     <RestorePackages>true</RestorePackages>
     <ExtrasUwpMetaPackageVersion>6.2.12</ExtrasUwpMetaPackageVersion>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   
   <ItemGroup>

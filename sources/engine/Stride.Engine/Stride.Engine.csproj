@@ -18,6 +18,7 @@
     <StridePackAssets>true</StridePackAssets>
     <!-- force generate Resource.designer.cs to namespace Stride.Engine to fix issue #553 -->
     <AndroidResgenNamespace>Stride.Engine</AndroidResgenNamespace>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
