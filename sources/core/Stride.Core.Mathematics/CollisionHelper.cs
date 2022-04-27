@@ -1196,6 +1196,27 @@ namespace Stride.Core.Mathematics
         }
 
         /// <summary>
+        /// Determines whether there is an intersection between a <see cref="Stride.Core.Mathematics.BoundingBoxInt3"/> and a <see cref="Stride.Core.Mathematics.BoundingBoxInt3"/>.
+        /// </summary>
+        /// <param name="box1">The first box to test.</param>
+        /// <param name="box2">The second box to test.</param>
+        /// <returns>Whether the two objects intersected.</returns>
+        public static bool BoxIntersectsBox(ref BoundingBoxInt3 box1, ref BoundingBoxInt3 box2)
+        {
+            if (box1.Minimum.X > box2.Maximum.X || box2.Minimum.X > box1.Maximum.X)
+                return false;
+
+            if (box1.Minimum.Y > box2.Maximum.Y || box2.Minimum.Y > box1.Maximum.Y)
+                return false;
+
+            if (box1.Minimum.Z > box2.Maximum.Z || box2.Minimum.Z > box1.Maximum.Z)
+                return false;
+
+            return true;
+        }
+
+
+        /// <summary>
         /// Determines whether there is an intersection between a <see cref="Stride.Core.Mathematics.BoundingBox"/> and a <see cref="Stride.Core.Mathematics.BoundingSphere"/>.
         /// </summary>
         /// <param name="box">The box to test.</param>
@@ -1266,6 +1287,24 @@ namespace Stride.Core.Mathematics
             return ContainmentType.Disjoint;
         }
 
+        /// <summary>
+        /// Determines whether a <see cref="Stride.Core.Mathematics.BoundingBox"/> contains a point.
+        /// </summary>
+        /// <param name="box">The box to test.</param>
+        /// <param name="point">The point to test.</param>
+        /// <returns>The type of containment the two objects have.</returns>
+        public static ContainmentType BoxContainsPoint(ref BoundingBoxInt3 box, ref Int3 point)
+        {
+            if (box.Minimum.X <= point.X && box.Maximum.X >= point.X &&
+                box.Minimum.Y <= point.Y && box.Maximum.Y >= point.Y &&
+                box.Minimum.Z <= point.Z && box.Maximum.Z >= point.Z)
+            {
+                return ContainmentType.Contains;
+            }
+
+            return ContainmentType.Disjoint;
+        }
+
         /* This implentation is wrong
         /// <summary>
         /// Determines whether a <see cref="Stride.Core.Mathematics.BoundingBox"/> contains a triangle.
@@ -1298,6 +1337,33 @@ namespace Stride.Core.Mathematics
         /// <param name="box2">The second box to test.</param>
         /// <returns>The type of containment the two objects have.</returns>
         public static ContainmentType BoxContainsBox(ref BoundingBox box1, ref BoundingBox box2)
+        {
+            if (box1.Maximum.X < box2.Minimum.X || box1.Minimum.X > box2.Maximum.X)
+                return ContainmentType.Disjoint;
+
+            if (box1.Maximum.Y < box2.Minimum.Y || box1.Minimum.Y > box2.Maximum.Y)
+                return ContainmentType.Disjoint;
+
+            if (box1.Maximum.Z < box2.Minimum.Z || box1.Minimum.Z > box2.Maximum.Z)
+                return ContainmentType.Disjoint;
+
+            if (box1.Minimum.X <= box2.Minimum.X && (box2.Maximum.X <= box1.Maximum.X &&
+                box1.Minimum.Y <= box2.Minimum.Y && box2.Maximum.Y <= box1.Maximum.Y) &&
+                box1.Minimum.Z <= box2.Minimum.Z && box2.Maximum.Z <= box1.Maximum.Z)
+            {
+                return ContainmentType.Contains;
+            }
+
+            return ContainmentType.Intersects;
+        }
+
+        /// <summary>
+        /// Determines whether a <see cref="Stride.Core.Mathematics.BoundingBox"/> contains a <see cref="Stride.Core.Mathematics.BoundingBox"/>.
+        /// </summary>
+        /// <param name="box1">The first box to test.</param>
+        /// <param name="box2">The second box to test.</param>
+        /// <returns>The type of containment the two objects have.</returns>
+        public static ContainmentType BoxContainsBox(ref BoundingBoxInt3 box1, ref BoundingBoxInt3 box2)
         {
             if (box1.Maximum.X < box2.Minimum.X || box1.Minimum.X > box2.Maximum.X)
                 return ContainmentType.Disjoint;
