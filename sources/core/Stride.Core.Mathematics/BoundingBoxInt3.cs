@@ -160,6 +160,25 @@ namespace Stride.Core.Mathematics
         }
 
         /// <summary>
+        /// Determines whether the current objects overlap. This differs from Intersect in that touching boxes do not overlap.
+        /// </summary>
+        /// <param name="box"></param>
+        /// <returns></returns>
+        public bool Overlaps(ref BoundingBoxInt3 box)
+        {
+            if (this.Minimum.X >= box.Maximum.X || box.Minimum.X >= this.Maximum.X)
+                return false;
+
+            if (this.Minimum.Y >= box.Maximum.Y || box.Minimum.Y >= this.Maximum.Y)
+                return false;
+
+            if (this.Minimum.Z >= box.Maximum.Z || box.Minimum.Z >= this.Maximum.Z)
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
         /// Constructs a <see cref="Stride.Core.Mathematics.BoundingBoxInt3"/> that fully contains the given points.
         /// </summary>
         /// <param name="points">The points that will be contained by the box.</param>
