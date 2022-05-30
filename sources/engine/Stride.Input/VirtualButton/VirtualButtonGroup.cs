@@ -22,6 +22,11 @@ namespace Stride.Input
         /// <value><c>true</c> if this instance is disjunction; otherwise, <c>false</c>.</value>
         public bool IsDisjunction { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating if this group are modifier keys e.g. shift/ctrl/alt that cannot be 'pressed' but instead should already check IsDown.
+        /// </summary>
+        public bool IsModifier { get; set; }
+
         protected override void InsertItem(int index, IVirtualButton item)
         {
             if (item == null)
@@ -111,7 +116,7 @@ namespace Stride.Input
 
         public bool IsPressed(InputManager manager)
         {
-            return CheckAnyOrAll(manager, IsPressed);
+            return CheckAnyOrAll(manager, IsModifier ? IsDown : IsPressed);
         }
 
         public bool IsReleased(InputManager manager)
