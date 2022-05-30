@@ -29,6 +29,7 @@
 using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using Stride.Core.Annotations;
 
 namespace Stride.Core.Mathematics
 {
@@ -38,7 +39,7 @@ namespace Stride.Core.Mathematics
     [DataContract("Int3")]
     [DataStyle(DataStyle.Compact)]
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    public struct Int3 : IEquatable<Int3>, IFormattable
+    public struct Int3 : IEquatable<Int3>, IFormattable, IComparable<Int3>, IComparable
     {
         /// <summary>
         /// The size of the <see cref="Int3"/> type, in bytes.
@@ -754,6 +755,27 @@ namespace Stride.Core.Mathematics
                 return false;
 
             return Equals((Int3)value);
+        }
+
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        public int CompareTo(Int3 other)
+        {
+            int comparison = Z.CompareTo(other.Z);
+            if (comparison == 0)
+                comparison = X.CompareTo(other.X);
+            if (comparison == 0)
+                comparison = Y.CompareTo(other.Y);
+            return comparison;
+        }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+        int IComparable.CompareTo([NotNull] object obj)
+        {
+            if (obj == null || obj.GetType() != GetType())
+                throw new ArgumentException(@"obj is not the same type as this instance.", nameof(obj));
+
+            var other = (Int3)obj;
+            return CompareTo(other);
         }
 #if WPFInterop
         /// <summary>
