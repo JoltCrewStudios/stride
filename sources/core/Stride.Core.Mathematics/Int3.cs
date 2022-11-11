@@ -28,6 +28,7 @@
 */
 using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Stride.Core.Annotations;
 
@@ -44,7 +45,7 @@ namespace Stride.Core.Mathematics
         /// <summary>
         /// The size of the <see cref="Int3"/> type, in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Utilities.SizeOf<Int3>();
+        public static readonly int SizeInBytes = Unsafe.SizeOf<Int3>();
 
         /// <summary>
         /// A <see cref="Int3"/> with all of its components set to zero.
