@@ -841,7 +841,7 @@ namespace Stride.Core.Mathematics
         }
 
         /// <summary>
-        /// Returns a vector containing the smallest components of the specified vectors.
+        /// Returns a vector containing the largest components of the specified vectors.
         /// </summary>
         /// <param name="left">The first source vector.</param>
         /// <param name="right">The second source vector.</param>
@@ -1760,6 +1760,19 @@ namespace Stride.Core.Mathematics
                 return false;
 
             return Equals((Vector3)value);
+        }
+                
+        /// <summary>
+        /// Deconstructs the vector's components into named variables.
+        /// </summary>
+        /// <param name="x">The X component</param>
+        /// <param name="y">The Y component</param>
+        /// <param name="z">The Z component</param>
+        public void Deconstruct(out float x, out float y, out float z)
+        {
+            x = X;
+            y = Y;
+            z = Z;
         }
 
 #if WPFInterop
