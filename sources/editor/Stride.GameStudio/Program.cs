@@ -82,8 +82,6 @@ public static class Program
         Thread.CurrentThread.Name = "Main thread";
 
         // Install Metrics for the editor
-        using (StrideGameStudio.MetricsClient = new MetricsClient(CommonApps.StrideEditorAppId))
-        {
             try
             {
                 // Environment.GetCommandLineArgs correctly process arguments regarding the presence of '\' and '"'
@@ -134,15 +132,6 @@ public static class Program
                 using (new WindowManager(mainDispatcher))
                 {
                     app = new App { ShutdownMode = ShutdownMode.OnExplicitShutdown };
-                    app.Activated += (sender, eventArgs) =>
-                    {
-                        StrideGameStudio.MetricsClient?.SetActiveState(true);
-                    };
-                    app.Deactivated += (sender, eventArgs) =>
-                    {
-                        StrideGameStudio.MetricsClient?.SetActiveState(false);
-                    };
-
                     app.InitializeComponent();
                     app.Run();
                 }
@@ -153,7 +142,6 @@ public static class Program
             {
                 HandleException(e, 0);
             }
-        }
     }
 
     private static void GlobalLoggerOnGlobalMessageLogged(ILogMessage logMessage)
