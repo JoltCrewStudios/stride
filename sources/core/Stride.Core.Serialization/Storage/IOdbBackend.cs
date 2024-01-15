@@ -23,14 +23,14 @@ namespace Stride.Core.Storage
         IContentIndexMap ContentIndexMap { get; }
 
         /// <summary>
-        /// Opens a <see cref="NativeStream" /> of the object with the specified <see cref="ObjectId" />.
+        /// Opens a <see cref="Stream" /> of the object with the specified <see cref="ObjectId" />.
         /// </summary>
         /// <param name="objectId">The <see cref="ObjectId" />.</param>
         /// <param name="mode">The mode.</param>
         /// <param name="access">The access.</param>
         /// <param name="share">The process share mode.</param>
         /// <returns>
-        /// A <see cref="NativeStream" /> opened from the specified <see cref="ObjectId" />.
+        /// A <see cref="Stream" /> opened from the specified <see cref="ObjectId" />.
         /// </returns>
         Stream OpenStream(ObjectId objectId, VirtualFileMode mode = VirtualFileMode.Open, VirtualFileAccess access = VirtualFileAccess.Read, VirtualFileShare share = VirtualFileShare.Read);
 
@@ -59,7 +59,7 @@ namespace Stride.Core.Storage
         OdbStreamWriter CreateStream();
 
         /// <summary>
-        /// Determines weither the object with the specified <see cref="ObjectId"/> exists.
+        /// Determines if the object with the specified <see cref="ObjectId"/> exists.
         /// </summary>
         /// <param name="objectId">The <see cref="ObjectId"/> to check existence for.</param>
         /// <returns><c>true</c> if an object with the specified <see cref="ObjectId"/> exists; otherwise, <c>false</c>.</returns>
