@@ -7,8 +7,8 @@
     <StrideAssemblyProcessor>true</StrideAssemblyProcessor>
     <StrideAssemblyProcessorOptions>--serialization --parameter-key</StrideAssemblyProcessorOptions>
     <StridePackAssets>true</StridePackAssets>
-    <TargetFramework>$(StrideEditorTargetFramework)</TargetFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <TargetFramework>$(StrideXplatEditorTargetFramework)</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\shared\SharedAssemblyInfo.cs">
