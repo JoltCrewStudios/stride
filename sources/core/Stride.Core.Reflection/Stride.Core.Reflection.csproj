@@ -9,6 +9,7 @@
     <StrideAssemblyProcessor>false</StrideAssemblyProcessor>
     <RestorePackages>true</RestorePackages>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   
   <ItemGroup>
