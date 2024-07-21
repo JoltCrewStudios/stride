@@ -401,6 +401,34 @@ namespace Stride.Core.Mathematics
         }
 
         /// <summary>
+        /// Calculates the cross product of two vectors.
+        /// </summary>
+        /// <param name="left">First source vector.</param>
+        /// <param name="right">Second source vector.</param>
+        /// <param name="result">When the method completes, contains he cross product of the two vectors.</param>
+        public static void Cross(ref readonly Int3 left, ref readonly Int3 right, out Int3 result)
+        {
+            result = new Int3(
+                (left.Y * right.Z) - (left.Z * right.Y),
+                (left.Z * right.X) - (left.X * right.Z),
+                (left.X * right.Y) - (left.Y * right.X));
+        }
+
+        /// <summary>
+        /// Calculates the cross product of two vectors.
+        /// </summary>
+        /// <param name="left">First source vector.</param>
+        /// <param name="right">Second source vector.</param>
+        /// <returns>The cross product of the two vectors.</returns>
+        public static Int3 Cross(in Int3 left, in Int3 right)
+        {
+            return new Int3(
+                (left.Y * right.Z) - (left.Z * right.Y),
+                (left.Z * right.X) - (left.X * right.Z),
+                (left.X * right.Y) - (left.Y * right.X));
+        }
+
+        /// <summary>
         /// Calculates the dot product of two vectors.
         /// </summary>
         /// <param name="left">First source vector.</param>
