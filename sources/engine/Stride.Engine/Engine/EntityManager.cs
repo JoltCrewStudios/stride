@@ -161,8 +161,8 @@ namespace Stride.Engine
 
         /// <summary>
         /// Removes the entity from the <see cref="EntityManager" />.
-        /// It works weither entity has a parent or not.
-        /// In conjonction with <see cref="HierarchicalProcessor" />, it will remove child entities as well.
+        /// It works either entity has a parent or not.
+        /// In conjonction with <see cref="EntityProcessor" />, it will remove child entities as well.
         /// </summary>
         /// <param name="entity">The entity.</param>
         public void Remove(Entity entity)
@@ -408,7 +408,7 @@ namespace Stride.Engine
 
         private void OnProcessorRemoved(EntityProcessor processor)
         {
-            // Remove the procsesor from any list
+            // Remove the processor from any list
             foreach (var componentTypeAndProcessors in MapComponentTypeToProcessors)
             {
                 var processorList = componentTypeAndProcessors.Value;
@@ -445,14 +445,14 @@ namespace Stride.Engine
             if (oldComponent != null)
             {
                 CheckEntityComponentWithProcessors(entity, oldComponent, true, currentDependentProcessors);
-                flexibleProcessors.RemoveComponent(oldComponent);
+                flexibleProcessors.RemoveComponent(oldComponent, ExecutionMode);
             }
 
             // Add new component to processors
             if (newComponent != null)
             {
                 CheckEntityComponentWithProcessors(entity, newComponent, false, currentDependentProcessors);
-                flexibleProcessors.IntroduceComponent(newComponent);
+                flexibleProcessors.IntroduceComponent(newComponent, ExecutionMode);
             }
 
             // Update all dependencies
@@ -505,9 +505,9 @@ namespace Stride.Engine
                 }
 
                 if (forceRemove)
-                    flexibleProcessors.RemoveComponent(component);
+                    flexibleProcessors.RemoveComponent(component, ExecutionMode);
                 else
-                    flexibleProcessors.IntroduceComponent(component);
+                    flexibleProcessors.IntroduceComponent(component, ExecutionMode);
             }
         }
 
