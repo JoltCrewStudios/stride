@@ -6,8 +6,8 @@ using System.IO;
 using System.Linq;
 using Stride.Core.Assets;
 using Stride.Core;
-using Stride.Core.VisualStudio;
-using System.Runtime.InteropServices;
+using Stride.Core.CodeEditorSupport.VisualStudio;
+using Stride.Core.Solutions;
 
 namespace Stride.Assets
 {
@@ -62,7 +62,7 @@ namespace Stride.Assets
             {
                 Name = PlatformType.Windows.ToString(),
                 IsAvailable = true,
-                TargetFramework = "net8.0-windows",
+                TargetFramework = "net10.0-windows",
                 RuntimeIdentifier = "win-x64",
                 Type = PlatformType.Windows
             };
@@ -120,7 +120,7 @@ namespace Stride.Assets
             {
                 Name = PlatformType.Linux.ToString(),
                 IsAvailable = true,
-                TargetFramework = "net8.0",
+                TargetFramework = "net10.0",
                 RuntimeIdentifier = "linux-x64",
                 Type = PlatformType.Linux,
             };
@@ -131,7 +131,7 @@ namespace Stride.Assets
             {
                 Name = PlatformType.macOS.ToString(),
                 IsAvailable = true,
-                TargetFramework = "net8.0",
+                TargetFramework = "net10.0",
                 RuntimeIdentifier = "osx-x64",
                 Type = PlatformType.macOS,
             };
@@ -142,7 +142,7 @@ namespace Stride.Assets
             {
                 Name = PlatformType.Android.ToString(),
                 Type = PlatformType.Android,
-                TargetFramework = "net8.0-android",
+                TargetFramework = "net10.0-android",
                 IsAvailable = IsVSComponentAvailableAnyVersion(XamarinAndroidComponents)
             };
             androidPlatform.DefineConstants.Add("STRIDE_PLATFORM_MONO_MOBILE");
@@ -169,7 +169,7 @@ namespace Stride.Assets
                 Name = PlatformType.iOS.ToString(),
                 SolutionName = "iPhone", // For iOS, we need to use iPhone as a solution name
                 Type = PlatformType.iOS,
-                TargetFramework = "net8.0-ios",
+                TargetFramework = "net10.0-ios",
                 IsAvailable = IsVSComponentAvailableAnyVersion(XamariniOSComponents)
             };
             iphonePlatform.PlatformsPart.Add(new SolutionPlatformPart("iPhoneSimulator"));
@@ -234,8 +234,6 @@ namespace Stride.Assets
         /// <returns>true if any of the components in the dictionary are available, false otherwise</returns>
         internal static bool IsVSComponentAvailableAnyVersion(IDictionary<Version, string> vsVersionToComponent)
         {
-            if (!OperatingSystem.IsWindows()) 
-                return false;
             if (vsVersionToComponent == null) { throw new ArgumentNullException("vsVersionToComponent"); }
 
             foreach (var pair in vsVersionToComponent)
@@ -244,12 +242,10 @@ namespace Stride.Assets
                 {
                     return IsFileInProgramFilesx86Exist(pair.Value);
                 }
-                else
-                {
-                    return VisualStudioVersions.AvailableVisualStudioInstances.Any(
-                        ideInfo => ideInfo.PackageVersions.ContainsKey(pair.Value)
-                    );
-                }
+
+                return VisualStudioVersions.AvailableInstances.Any(
+                    ideInfo => ideInfo.PackageVersions.ContainsKey(pair.Value)
+                );
             }
             return false;
         }

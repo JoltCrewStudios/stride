@@ -23,7 +23,7 @@
 
 #if STRIDE_GRAPHICS_API_DIRECT3D
 using System;
-using System.Reflection;
+using System.Collections.Generic;
 using SharpDX;
 using SharpDX.DXGI;
 using SharpDX.Mathematics.Interop;
@@ -333,16 +333,20 @@ namespace Stride.Graphics
         /// </summary>
         /// <param name="parentTexture">Specified parent texture</param>
         /// <returns>A list of the children textures which were destroyed</returns>
-        private FastList<Texture> DestroyChildrenTextures(Texture parentTexture)
+        private List<Texture> DestroyChildrenTextures(Texture parentTexture)
         {
-            var fastList = new FastList<Texture>();
-            foreach (var resource in GraphicsDevice.Resources)
+            var fastList = new List<Texture>();
+            var resources = GraphicsDevice.Resources;
+            lock (resources)
             {
-                var texture = resource as Texture;
-                if (texture != null && texture.ParentTexture == parentTexture)
+                foreach (var resource in resources)
                 {
-                    texture.OnDestroyed();
-                    fastList.Add(texture);
+                    var texture = resource as Texture;
+                    if (texture != null && texture.ParentTexture == parentTexture)
+                    {
+                        texture.OnDestroyed();
+                        fastList.Add(texture);
+                    }
                 }
             }
 
@@ -469,7 +473,7 @@ namespace Stride.Graphics
                 SwapEffect = useFlipModel ? SwapEffect.FlipDiscard : SwapEffect.Discard,
                 Usage = Usage.BackBuffer | Usage.RenderTargetOutput,
                 IsWindowed = true,
-                Flags = GetSwapChainFlags(), 
+                Flags = GetSwapChainFlags(),
             };
 
 #if STRIDE_GRAPHICS_API_DIRECT3D11
@@ -477,6 +481,12 @@ namespace Stride.Graphics
 #elif STRIDE_GRAPHICS_API_DIRECT3D12
             var newSwapChain = new SwapChain(GraphicsAdapterFactory.NativeFactory, GraphicsDevice.NativeCommandQueue, description);
 #endif
+            var swapChain3 = newSwapChain.QueryInterface<SwapChain3>();
+            if (swapChain3 != null)
+            {
+                swapChain3.ColorSpace1 = (SharpDX.DXGI.ColorSpaceType)Description.OutputColorSpace;
+                swapChain3.Dispose();
+            }
 
             //prevent normal alt-tab
             GraphicsAdapterFactory.NativeFactory.MakeWindowAssociation(handle, WindowAssociationFlags.IgnoreAltEnter);
@@ -514,6 +524,7 @@ namespace Stride.Graphics
         /// <summary>
         /// Flip model does not support certain format, this method ensures it is in a supported format.
         /// https://learn.microsoft.com/en-us/windows/win32/direct3ddxgi/dxgi-flip-model
+        /// For HDR see: https://learn.microsoft.com/en-us/windows/win32/direct3darticles/high-dynamic-range
         /// </summary>
         /// <exception cref="ArgumentException">
         /// Will throw if the given format does not have a direct analog supported by the flip model
@@ -523,7 +534,8 @@ namespace Stride.Graphics
             var nonSRgb = pixelFormat.ToNonSRgb();
             switch (nonSRgb)
             {
-                case PixelFormat.R16G16B16A16_Float:
+                case PixelFormat.R16G16B16A16_Float: // scRGB HDR, should use PresenterColorSpace.RgbFullG10NoneP709, gets converted by windows to display color space
+                case PixelFormat.R10G10B10A2_UNorm: // HDR10/BT.2100 HDR, should use PresenterColorSpace.RgbFullG2084NoneP2020, directly sent to display
                 case PixelFormat.B8G8R8A8_UNorm:
                 case PixelFormat.R8G8B8A8_UNorm:
                     return nonSRgb;
