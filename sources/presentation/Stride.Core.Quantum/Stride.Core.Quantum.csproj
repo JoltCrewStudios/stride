@@ -1,5 +1,4 @@
 <Project>
-
   <Import Project="..\..\targets\Stride.Core.props" />
 
   <PropertyGroup>
@@ -7,6 +6,9 @@
     <StrideAssemblyProcessorOptions>--auto-module-initializer --serialization</StrideAssemblyProcessorOptions>
     <TargetFramework>$(StrideXplatEditorTargetFramework)</TargetFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,5 +22,4 @@
   </ItemGroup>
 
   <Import Project="$(StrideSdkTargets)" />
-
 </Project>
