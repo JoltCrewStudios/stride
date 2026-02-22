@@ -1572,21 +1572,6 @@ public static class CollisionHelper
 
 
     /// <summary>
-    /// Determines whether a <see cref="Stride.Core.Mathematics.BoundingBox"/> contains a <see cref="Stride.Core.Mathematics.BoundingSphere"/>.
-    /// </summary>
-    /// <param name="box">The box to test.</param>
-    /// <param name="sphere">The sphere to test.</param>
-    /// <returns>The type of containment the two objects have.</returns>
-    public static ContainmentType BoxContainsSphere(ref readonly BoundingBox box, ref readonly BoundingSphere sphere)
-    {
-        Vector3 vector;
-        Vector3.Clamp(in sphere.Center, in box.Minimum, in box.Maximum, out vector);
-        float distance = Vector3.DistanceSquared(sphere.Center, vector);
-
-        return hit;
-    }
-
-    /// <summary>
     /// Determines whether there is an intersection between a <see cref="Stride.Core.Mathematics.BoundingBoxInt3"/> and a <see cref="Stride.Core.Mathematics.BoundingBoxInt3"/>.
     /// </summary>
     /// <param name="box1">The first box to test.</param>
@@ -1605,4 +1590,23 @@ public static class CollisionHelper
 
         return true;
     }
+
+    /// <summary>
+    /// Determines whether a <see cref="Stride.Core.Mathematics.BoundingBox"/> contains a point.
+    /// </summary>
+    /// <param name="box">The box to test.</param>
+    /// <param name="point">The point to test.</param>
+    /// <returns>The type of containment the two objects have.</returns>
+    public static ContainmentType BoxContainsPoint(ref BoundingBoxInt3 box, ref Int3 point)
+    {
+        if (box.Minimum.X <= point.X && box.Maximum.X >= point.X &&
+            box.Minimum.Y <= point.Y && box.Maximum.Y >= point.Y &&
+            box.Minimum.Z <= point.Z && box.Maximum.Z >= point.Z)
+        {
+            return ContainmentType.Contains;
+        }
+
+        return ContainmentType.Disjoint;
+    }
+
 }

@@ -452,17 +452,6 @@ public struct Int3 : IEquatable<Int3>, IFormattable
     /// </summary>
     /// <param name="left">First source vector.</param>
     /// <param name="right">Second source vector.</param>
-    /// <param name="result">When the method completes, contains the dot product of the two vectors.</param>
-    public static void Dot(ref readonly Int3 left, ref readonly Int3 right, out int result)
-    {
-        result = (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z);
-    }
-
-    /// <summary>
-    /// Calculates the dot product of two vectors.
-    /// </summary>
-    /// <param name="left">First source vector.</param>
-    /// <param name="right">Second source vector.</param>
     /// <returns>The dot product of the two vectors.</returns>
     public static int Dot(Int3 left, Int3 right)
     {
@@ -802,7 +791,7 @@ public struct Int3 : IEquatable<Int3>, IFormattable
     /// <returns>
     /// <c>true</c> if the specified <see cref="Int3"/> is equal to this instance; otherwise, <c>false</c>.
     /// </returns>
-    public bool Equals(Int3 other)
+    public readonly bool Equals(Int3 other)
     {
         return other.X == X && other.Y == Y && other.Z == Z;
     }
@@ -817,20 +806,6 @@ public struct Int3 : IEquatable<Int3>, IFormattable
     public override readonly int GetHashCode()
     {
         return HashCode.Combine(X, Y, Z);
-    }
-
-    /// <summary>
-    /// Determines whether the specified <see cref="Int3"/> is equal to this instance.
-    /// </summary>
-    /// <param name="other">The <see cref="Int3"/> to compare with this instance.</param>
-    /// <returns>
-    /// <c>true</c> if the specified <see cref="Int3"/> is equal to this instance; otherwise, <c>false</c>.
-    /// </returns>
-    public readonly bool Equals(Int3 other)
-    {
-        return MathF.Abs(other.X - X) < MathUtil.ZeroTolerance &&
-            MathF.Abs(other.Y - Y) < MathUtil.ZeroTolerance &&
-            MathF.Abs(other.Z - Z) < MathUtil.ZeroTolerance;
     }
 
     /// <summary>
@@ -870,15 +845,6 @@ public struct Int3 : IEquatable<Int3>, IFormattable
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
-    int IComparable.CompareTo([NotNull] object obj)
-    {
-        if (obj == null || obj.GetType() != GetType())
-            throw new ArgumentException(@"obj is not the same type as this instance.", nameof(obj));
-
-        var other = (Int3)obj;
-        return CompareTo(other);
-    }
-        
 #if WPFInterop
     /// <summary>
     /// Performs an implicit conversion from <see cref="Stride.Core.Mathematics.Int3"/> to <see cref="System.Windows.Media.Media3D.Int3D"/>.
