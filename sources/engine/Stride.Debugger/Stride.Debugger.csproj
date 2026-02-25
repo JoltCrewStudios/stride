@@ -10,6 +10,7 @@
     <StrideBuildTags>WindowsTools</StrideBuildTags>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Mono.Options" />
   </ItemGroup>
